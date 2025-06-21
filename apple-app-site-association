@@ -4,5 +4,8 @@
     "details": [
       {
         "appID": "TEAM_ID.com.anzy.mobileapp",
+        "paths": ["*"]
+      }
+    ]
   }
-} 
+}
