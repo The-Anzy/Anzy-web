@@ -4,28 +4,5 @@
     "details": [
       {
         "appID": "TEAM_ID.com.anzy.mobileapp",
-<<<<<<< HEAD
-        "paths": [
-          "/",
-          "/home",
-          "/profile",
-          "/post/*",
-          "/login",
-          "/register",
-          "/verify",
-          "/forgot-password",
-          "/camera",
-          "/media/*"
-        ]
-      }
-    ]
-  },
-  "webcredentials": {
-    "apps": ["TEAM_ID.com.anzy.mobileapp"]
-=======
-        "paths": ["*"]
-      }
-    ]
->>>>>>> apiIntigration
   }
 } 
