@@ -34,7 +34,7 @@
         }
         .fallback-link {
             display: inline-block;
-            margin-top: 20px;
+            margin: 10px;
             padding: 10px 20px;
             background-color: #007bff;
             color: white;
@@ -44,6 +44,13 @@
         .fallback-link:hover {
             background-color: #0056b3;
         }
+        .platform-info {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
@@ -51,7 +58,17 @@
         <h1>Opening in Anzy App</h1>
         <p>Redirecting you to the Anzy app...</p>
         <div class="spinner"></div>
-        <p>If the app doesn't open automatically, <a href="#" id="fallback-link" class="fallback-link">click here</a></p>
+        
+        <div class="platform-info" id="platform-info">
+            Detecting your platform...
+        </div>
+        
+        <div id="fallback-links">
+            <p>If the app doesn't open automatically:</p>
+            <a href="#" id="ios-link" class="fallback-link" style="display: none;">Open in iOS App</a>
+            <a href="#" id="android-link" class="fallback-link" style="display: none;">Open in Android App</a>
+            <a href="#" id="generic-link" class="fallback-link">Open in App</a>
+        </div>
     </div>
 
     <script>
@@ -59,20 +76,74 @@
         const currentPath = window.location.pathname + window.location.search;
         const fullUrl = window.location.href;
         
-        // Try to open the app with the current URL
-        function openApp() {
-            // For iOS - try to open the app
-            window.location.href = `anzy://${currentPath}`;
+        // Detect platform
+        function detectPlatform() {
+            const userAgent = navigator.userAgent.toLowerCase();
+            const platformInfo = document.getElementById('platform-info');
             
-            // Fallback after a short delay
-            setTimeout(function() {
-                // If the app doesn't open, redirect to the app store or show fallback
-                window.location.href = 'https://apps.apple.com/app/anzy/id123456789'; // Replace with actual App Store ID
-            }, 2000);
+            if (/iphone|ipad|ipod/.test(userAgent)) {
+                platformInfo.textContent = 'iOS device detected';
+                return 'ios';
+            } else if (/android/.test(userAgent)) {
+                platformInfo.textContent = 'Android device detected';
+                return 'android';
+            } else {
+                platformInfo.textContent = 'Desktop or other platform detected';
+                return 'desktop';
+            }
         }
         
-        // Set up the fallback link
-        document.getElementById('fallback-link').href = `anzy://${currentPath}`;
+        // Try to open the app based on platform
+        function openApp() {
+            const platform = detectPlatform();
+            const iosLink = document.getElementById('ios-link');
+            const androidLink = document.getElementById('android-link');
+            const genericLink = document.getElementById('generic-link');
+            
+            if (platform === 'ios') {
+                // iOS Universal Links - try the web URL first
+                window.location.href = fullUrl;
+                
+                // Fallback to custom scheme after delay
+                setTimeout(function() {
+                    window.location.href = `anzy://${currentPath}`;
+                }, 1000);
+                
+                // Show iOS fallback link
+                iosLink.style.display = 'inline-block';
+                iosLink.href = `anzy://${currentPath}`;
+                
+            } else if (platform === 'android') {
+                // Android App Links - try the web URL first
+                window.location.href = fullUrl;
+                
+                // Fallback to custom scheme after delay
+                setTimeout(function() {
+                    window.location.href = `anzy://${currentPath}`;
+                }, 1000);
+                
+                // Show Android fallback link
+                androidLink.style.display = 'inline-block';
+                androidLink.href = `anzy://${currentPath}`;
+                
+            } else {
+                // Desktop or other platform
+                window.location.href = fullUrl;
+                genericLink.href = fullUrl;
+            }
+            
+            // Final fallback to app stores after longer delay
+            setTimeout(function() {
+                if (platform === 'ios') {
+                    window.location.href = 'https://apps.apple.com/app/anzy/id123456789'; // Replace with actual App Store ID
+                } else if (platform === 'android') {
+                    window.location.href = 'https://play.google.com/store/apps/details?id=com.anzy.mobileapp'; // Replace with actual Play Store ID
+                }
+            }, 3000);
+        }
+        
+        // Set up the generic fallback link
+        document.getElementById('generic-link').href = fullUrl;
         
         // Try to open the app immediately
         openApp();
