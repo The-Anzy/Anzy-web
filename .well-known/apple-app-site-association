@@ -4,7 +4,6 @@
     "details": [
       {
         "appID": "TEAM_ID.com.anzy.mobileapp",
-<<<<<<< HEAD
         "paths": [
           "/",
           "/home",
@@ -22,10 +21,5 @@
   },
   "webcredentials": {
     "apps": ["TEAM_ID.com.anzy.mobileapp"]
-=======
-        "paths": ["*"]
-      }
-    ]
->>>>>>> apiIntigration
   }
 } 
