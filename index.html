@@ -41,6 +41,15 @@
             margin: 20px 0;
             text-align: left;
         }
+        .dev-banner {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -48,12 +57,19 @@
         <h1>Anzy Universal Links</h1>
         <p>This page is used to test universal links for the Anzy app.</p>
         
+        <div class="dev-banner">
+            <strong>🚧 Development Mode</strong><br>
+            App is not yet published to App Store or Play Store.<br>
+            Universal links work with development builds (TestFlight/APK).
+        </div>
+        
         <div class="info">
             <h3>How Universal Links Work:</h3>
             <ul>
                 <li>When you click a link below, it should open the Anzy app if installed</li>
-                <li>If the app isn't installed, it will redirect to the App Store</li>
+                <li>Works with development builds via TestFlight (iOS) or APK (Android)</li>
                 <li>These links work from any app, email, or browser</li>
+                <li>Test with actual devices, not simulators</li>
             </ul>
         </div>
 
@@ -71,6 +87,16 @@
             <ul>
                 <li><strong>Apple:</strong> <a href="/.well-known/apple-app-site-association">/.well-known/apple-app-site-association</a></li>
                 <li><strong>Android:</strong> <a href="/.well-known/assetlinks.json">/.well-known/assetlinks.json</a></li>
+            </ul>
+        </div>
+        
+        <div class="info">
+            <h3>Development Setup:</h3>
+            <ul>
+                <li><strong>iOS:</strong> Install via TestFlight or development build</li>
+                <li><strong>Android:</strong> Install via APK or development build</li>
+                <li><strong>Testing:</strong> Use real devices, not simulators</li>
+                <li><strong>Team ID:</strong> Update in apple-app-site-association file</li>
             </ul>
         </div>
     </div>

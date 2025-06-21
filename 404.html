@@ -51,6 +51,25 @@
             border-radius: 5px;
             font-size: 14px;
         }
+        .dev-info {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 5px;
+            font-size: 14px;
+            color: #856404;
+        }
+        .url-display {
+            margin: 15px 0;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 12px;
+            word-break: break-all;
+        }
     </style>
 </head>
 <body>
@@ -63,11 +82,30 @@
             Detecting your platform...
         </div>
         
+        <div class="dev-info">
+            <strong>Development Mode:</strong> App is not yet published to stores.<br>
+            This link will work when the app is installed via development/testing methods.
+        </div>
+        
+        <div class="url-display">
+            <strong>URL being opened:</strong><br>
+            <span id="url-display">Loading...</span>
+        </div>
+        
         <div id="fallback-links">
             <p>If the app doesn't open automatically:</p>
             <a href="#" id="ios-link" class="fallback-link" style="display: none;">Open in iOS App</a>
             <a href="#" id="android-link" class="fallback-link" style="display: none;">Open in Android App</a>
-            <a href="#" id="generic-link" class="fallback-link">Open in App</a>
+            <a href="#" id="generic-link" class="fallback-link">Try Again</a>
+        </div>
+        
+        <div style="margin-top: 30px; font-size: 12px; color: #6c757d;">
+            <p><strong>For Developers:</strong></p>
+            <ul style="text-align: left; display: inline-block;">
+                <li>Make sure the app is installed via TestFlight (iOS) or APK (Android)</li>
+                <li>Universal links work with development builds</li>
+                <li>Test with actual devices, not simulators</li>
+            </ul>
         </div>
     </div>
 
@@ -75,6 +113,9 @@
         // Get the current URL path
         const currentPath = window.location.pathname + window.location.search;
         const fullUrl = window.location.href;
+        
+        // Display the URL being opened
+        document.getElementById('url-display').textContent = fullUrl;
         
         // Detect platform
         function detectPlatform() {
@@ -131,15 +172,6 @@
                 window.location.href = fullUrl;
                 genericLink.href = fullUrl;
             }
-            
-            // Final fallback to app stores after longer delay
-            setTimeout(function() {
-                if (platform === 'ios') {
-                    window.location.href = 'https://apps.apple.com/app/anzy/id123456789'; // Replace with actual App Store ID
-                } else if (platform === 'android') {
-                    window.location.href = 'https://play.google.com/store/apps/details?id=com.anzy.mobileapp'; // Replace with actual Play Store ID
-                }
-            }, 3000);
         }
         
         // Set up the generic fallback link
