@@ -80,6 +80,15 @@
             color: #721c24;
             text-align: left;
         }
+        .status {
+            margin: 15px 0;
+            padding: 10px;
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 5px;
+            font-size: 14px;
+            color: #155724;
+        }
     </style>
 </head>
 <body>
@@ -87,6 +96,10 @@
         <h1>Opening in Anzy App</h1>
         <p>Redirecting you to the Anzy app...</p>
         <div class="spinner"></div>
+        
+        <div class="status" id="status">
+            Initializing...
+        </div>
         
         <div class="platform-info" id="platform-info">
             Detecting your platform...
@@ -126,6 +139,11 @@
     </div>
 
     <script>
+        // Prevent infinite reloads
+        let hasRedirected = false;
+        let redirectAttempts = 0;
+        const maxRedirects = 2;
+        
         // Get the current URL path
         const currentPath = window.location.pathname + window.location.search;
         const fullUrl = window.location.href;
@@ -133,6 +151,11 @@
         
         // Display the URL being opened
         document.getElementById('url-display').textContent = fullUrl;
+        
+        // Update status
+        function updateStatus(message) {
+            document.getElementById('status').textContent = message;
+        }
         
         // Detect platform
         function detectPlatform() {
@@ -159,9 +182,29 @@
                 <strong>Platform:</strong> ${platform}<br>
                 <strong>Current URL:</strong> ${fullUrl}<br>
                 <strong>Custom Scheme:</strong> ${customSchemeUrl}<br>
+                <strong>Redirect Attempts:</strong> ${redirectAttempts}<br>
                 <strong>User Agent:</strong> ${navigator.userAgent.substring(0, 100)}...<br>
                 <strong>Timestamp:</strong> ${new Date().toISOString()}
             `;
+        }
+        
+        // Safe redirect function
+        function safeRedirect(url, method) {
+            if (hasRedirected || redirectAttempts >= maxRedirects) {
+                updateStatus('Redirect limit reached. Use manual buttons below.');
+                return;
+            }
+            
+            redirectAttempts++;
+            hasRedirected = true;
+            updateStatus(`Attempting ${method} redirect (${redirectAttempts}/${maxRedirects})...`);
+            
+            console.log(`Attempting ${method}:`, url);
+            
+            // Use a small delay to prevent immediate redirect
+            setTimeout(function() {
+                window.location.href = url;
+            }, 100);
         }
         
         // Try to open the app with multiple methods
@@ -173,26 +216,31 @@
             document.getElementById('custom-scheme-link').href = customSchemeUrl;
             document.getElementById('web-url-link').href = fullUrl;
             
+            updateStatus('Starting app redirect sequence...');
+            
             if (platform === 'ios' || platform === 'android') {
-                // Method 1: Try custom scheme immediately (most reliable for development)
-                console.log('Trying custom scheme:', customSchemeUrl);
-                window.location.href = customSchemeUrl;
+                // Method 1: Try custom scheme first (most reliable for development)
+                safeRedirect(customSchemeUrl, 'custom scheme');
                 
-                // Method 2: Fallback to web URL after a short delay
+                // Method 2: Fallback to web URL after a longer delay
                 setTimeout(function() {
-                    console.log('Trying web URL:', fullUrl);
-                    window.location.href = fullUrl;
-                }, 500);
+                    if (!hasRedirected) {
+                        safeRedirect(fullUrl, 'web URL');
+                    }
+                }, 2000);
                 
             } else {
                 // Desktop - just show the web URL
+                updateStatus('Desktop detected - showing web URL');
                 console.log('Desktop detected, showing web URL');
                 window.location.href = fullUrl;
             }
         }
         
-        // Try to open the app immediately
-        openApp();
+        // Start the process after a short delay
+        setTimeout(function() {
+            openApp();
+        }, 500);
     </script>
 </body>
 </html> 
