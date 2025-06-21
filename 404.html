@@ -70,6 +70,16 @@
             font-size: 12px;
             word-break: break-all;
         }
+        .debug-info {
+            margin: 15px 0;
+            padding: 10px;
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            border-radius: 5px;
+            font-size: 12px;
+            color: #721c24;
+            text-align: left;
+        }
     </style>
 </head>
 <body>
@@ -92,20 +102,26 @@
             <span id="url-display">Loading...</span>
         </div>
         
+        <div class="debug-info">
+            <strong>Troubleshooting:</strong><br>
+            • Make sure the app is installed via TestFlight (iOS) or APK (Android)<br>
+            • Universal links require HTTPS and proper configuration<br>
+            • Test with real devices, not simulators<br>
+            • Check that Team ID is updated in apple-app-site-association
+        </div>
+        
         <div id="fallback-links">
             <p>If the app doesn't open automatically:</p>
-            <a href="#" id="ios-link" class="fallback-link" style="display: none;">Open in iOS App</a>
-            <a href="#" id="android-link" class="fallback-link" style="display: none;">Open in Android App</a>
-            <a href="#" id="generic-link" class="fallback-link">Try Again</a>
+            <a href="#" id="custom-scheme-link" class="fallback-link">Try Custom Scheme (anzy://)</a>
+            <a href="#" id="web-url-link" class="fallback-link">Try Web URL Again</a>
+            <a href="/" class="fallback-link">Go to Home Page</a>
         </div>
         
         <div style="margin-top: 30px; font-size: 12px; color: #6c757d;">
-            <p><strong>For Developers:</strong></p>
-            <ul style="text-align: left; display: inline-block;">
-                <li>Make sure the app is installed via TestFlight (iOS) or APK (Android)</li>
-                <li>Universal links work with development builds</li>
-                <li>Test with actual devices, not simulators</li>
-            </ul>
+            <p><strong>Debug Info:</strong></p>
+            <div id="debug-details" style="text-align: left; background: #f8f9fa; padding: 10px; border-radius: 5px;">
+                Loading debug information...
+            </div>
         </div>
     </div>
 
@@ -113,6 +129,7 @@
         // Get the current URL path
         const currentPath = window.location.pathname + window.location.search;
         const fullUrl = window.location.href;
+        const customSchemeUrl = `anzy://${currentPath}`;
         
         // Display the URL being opened
         document.getElementById('url-display').textContent = fullUrl;
@@ -134,48 +151,45 @@
             }
         }
         
-        // Try to open the app based on platform
-        function openApp() {
+        // Update debug information
+        function updateDebugInfo() {
             const platform = detectPlatform();
-            const iosLink = document.getElementById('ios-link');
-            const androidLink = document.getElementById('android-link');
-            const genericLink = document.getElementById('generic-link');
-            
-            if (platform === 'ios') {
-                // iOS Universal Links - try the web URL first
-                window.location.href = fullUrl;
-                
-                // Fallback to custom scheme after delay
-                setTimeout(function() {
-                    window.location.href = `anzy://${currentPath}`;
-                }, 1000);
-                
-                // Show iOS fallback link
-                iosLink.style.display = 'inline-block';
-                iosLink.href = `anzy://${currentPath}`;
-                
-            } else if (platform === 'android') {
-                // Android App Links - try the web URL first
-                window.location.href = fullUrl;
-                
-                // Fallback to custom scheme after delay
-                setTimeout(function() {
-                    window.location.href = `anzy://${currentPath}`;
-                }, 1000);
-                
-                // Show Android fallback link
-                androidLink.style.display = 'inline-block';
-                androidLink.href = `anzy://${currentPath}`;
-                
-            } else {
-                // Desktop or other platform
-                window.location.href = fullUrl;
-                genericLink.href = fullUrl;
-            }
+            const debugDetails = document.getElementById('debug-details');
+            debugDetails.innerHTML = `
+                <strong>Platform:</strong> ${platform}<br>
+                <strong>Current URL:</strong> ${fullUrl}<br>
+                <strong>Custom Scheme:</strong> ${customSchemeUrl}<br>
+                <strong>User Agent:</strong> ${navigator.userAgent.substring(0, 100)}...<br>
+                <strong>Timestamp:</strong> ${new Date().toISOString()}
+            `;
         }
         
-        // Set up the generic fallback link
-        document.getElementById('generic-link').href = fullUrl;
+        // Try to open the app with multiple methods
+        function openApp() {
+            const platform = detectPlatform();
+            updateDebugInfo();
+            
+            // Set up fallback links
+            document.getElementById('custom-scheme-link').href = customSchemeUrl;
+            document.getElementById('web-url-link').href = fullUrl;
+            
+            if (platform === 'ios' || platform === 'android') {
+                // Method 1: Try custom scheme immediately (most reliable for development)
+                console.log('Trying custom scheme:', customSchemeUrl);
+                window.location.href = customSchemeUrl;
+                
+                // Method 2: Fallback to web URL after a short delay
+                setTimeout(function() {
+                    console.log('Trying web URL:', fullUrl);
+                    window.location.href = fullUrl;
+                }, 500);
+                
+            } else {
+                // Desktop - just show the web URL
+                console.log('Desktop detected, showing web URL');
+                window.location.href = fullUrl;
+            }
+        }
         
         // Try to open the app immediately
         openApp();
