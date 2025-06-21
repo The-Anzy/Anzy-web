@@ -19,9 +19,12 @@
         h1 {
             color: #333;
         }
+        .test-links {
+            margin: 30px 0;
+        }
         .test-link {
             display: inline-block;
-            margin-top: 20px;
+            margin: 10px;
             padding: 10px 20px;
             background-color: #007bff;
             color: white;
@@ -31,13 +34,45 @@
         .test-link:hover {
             background-color: #0056b3;
         }
+        .info {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+            text-align: left;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Anzy Universal Links</h1>
         <p>This page is used to test universal links for the Anzy app.</p>
-        <a href="https://anzy-app.com/test" class="test-link">Test Universal Link</a>
+        
+        <div class="info">
+            <h3>How Universal Links Work:</h3>
+            <ul>
+                <li>When you click a link below, it should open the Anzy app if installed</li>
+                <li>If the app isn't installed, it will redirect to the App Store</li>
+                <li>These links work from any app, email, or browser</li>
+            </ul>
+        </div>
+
+        <div class="test-links">
+            <h3>Test Links:</h3>
+            <a href="https://theanzy.com/post/123" class="test-link">Test Post 123</a>
+            <a href="https://theanzy.com/profile" class="test-link">Test Profile</a>
+            <a href="https://theanzy.com/home" class="test-link">Test Home</a>
+            <a href="https://theanzy.com/login" class="test-link">Test Login</a>
+            <a href="https://theanzy.com/register" class="test-link">Test Register</a>
+        </div>
+
+        <div class="info">
+            <h3>Configuration Files:</h3>
+            <ul>
+                <li><strong>Apple:</strong> <a href="/.well-known/apple-app-site-association">/.well-known/apple-app-site-association</a></li>
+                <li><strong>Android:</strong> <a href="/.well-known/assetlinks.json">/.well-known/assetlinks.json</a></li>
+            </ul>
+        </div>
     </div>
 </body>
 </html> 
