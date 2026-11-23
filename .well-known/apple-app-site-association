@@ -5,7 +5,6 @@
       {
         "appID": "TEAM_ID.com.anzy.mobileapp",
         "paths": [
-          "/",
           "/home",
           "/profile",
           "/post/*",
@@ -20,6 +19,8 @@
     ]
   },
   "webcredentials": {
-    "apps": ["TEAM_ID.com.anzy.mobileapp"]
+    "apps": [
+      "TEAM_ID.com.anzy.mobileapp"
+    ]
   }
-} 
+}

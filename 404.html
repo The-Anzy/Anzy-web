@@ -1,246 +1,40 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redirecting to Anzy App</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 50px;
-            background-color: #f5f5f5;
-        }
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            background: white;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        .spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #007bff;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 20px auto;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        .fallback-link {
-            display: inline-block;
-            margin: 10px;
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-        .fallback-link:hover {
-            background-color: #0056b3;
-        }
-        .platform-info {
-            margin: 20px 0;
-            padding: 15px;
-            background-color: #e9ecef;
-            border-radius: 5px;
-            font-size: 14px;
-        }
-        .dev-info {
-            margin: 20px 0;
-            padding: 15px;
-            background-color: #fff3cd;
-            border: 1px solid #ffeaa7;
-            border-radius: 5px;
-            font-size: 14px;
-            color: #856404;
-        }
-        .url-display {
-            margin: 15px 0;
-            padding: 10px;
-            background-color: #f8f9fa;
-            border: 1px solid #dee2e6;
-            border-radius: 5px;
-            font-family: monospace;
-            font-size: 12px;
-            word-break: break-all;
-        }
-        .debug-info {
-            margin: 15px 0;
-            padding: 10px;
-            background-color: #f8d7da;
-            border: 1px solid #f5c6cb;
-            border-radius: 5px;
-            font-size: 12px;
-            color: #721c24;
-            text-align: left;
-        }
-        .status {
-            margin: 15px 0;
-            padding: 10px;
-            background-color: #d4edda;
-            border: 1px solid #c3e6cb;
-            border-radius: 5px;
-            font-size: 14px;
-            color: #155724;
-        }
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Page not found | The Anzy</title>
+<meta name="description" content="This page does not exist.">
+<meta property="og:title" content="Page not found | The Anzy">
+<meta property="og:description" content="This page does not exist.">
+<meta name="theme-color" content="#2c1a9e">
+<meta name="robots" content="noindex">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Opening in Anzy App</h1>
-        <p>Redirecting you to the Anzy app...</p>
-        <div class="spinner"></div>
-        
-        <div class="status" id="status">
-            Initializing...
-        </div>
-        
-        <div class="platform-info" id="platform-info">
-            Detecting your platform...
-        </div>
-        
-        <div class="dev-info">
-            <strong>Development Mode:</strong> App is not yet published to stores.<br>
-            This link will work when the app is installed via development/testing methods.
-        </div>
-        
-        <div class="url-display">
-            <strong>URL being opened:</strong><br>
-            <span id="url-display">Loading...</span>
-        </div>
-        
-        <div class="debug-info">
-            <strong>Troubleshooting:</strong><br>
-            • Make sure the app is installed via TestFlight (iOS) or APK (Android)<br>
-            • Universal links require HTTPS and proper configuration<br>
-            • Test with real devices, not simulators<br>
-            • Check that Team ID is updated in apple-app-site-association
-        </div>
-        
-        <div id="fallback-links">
-            <p>If the app doesn't open automatically:</p>
-            <a href="#" id="custom-scheme-link" class="fallback-link">Try Custom Scheme (anzy://)</a>
-            <a href="#" id="web-url-link" class="fallback-link">Try Web URL Again</a>
-            <a href="/" class="fallback-link">Go to Home Page</a>
-        </div>
-        
-        <div style="margin-top: 30px; font-size: 12px; color: #6c757d;">
-            <p><strong>Debug Info:</strong></p>
-            <div id="debug-details" style="text-align: left; background: #f8f9fa; padding: 10px; border-radius: 5px;">
-                Loading debug information...
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // Prevent infinite reloads
-        let hasRedirected = false;
-        let redirectAttempts = 0;
-        const maxRedirects = 2;
-        
-        // Get the current URL path
-        const currentPath = window.location.pathname + window.location.search;
-        const fullUrl = window.location.href;
-        const customSchemeUrl = `anzy://${currentPath}`;
-        
-        // Display the URL being opened
-        document.getElementById('url-display').textContent = fullUrl;
-        
-        // Update status
-        function updateStatus(message) {
-            document.getElementById('status').textContent = message;
-        }
-        
-        // Detect platform
-        function detectPlatform() {
-            const userAgent = navigator.userAgent.toLowerCase();
-            const platformInfo = document.getElementById('platform-info');
-            
-            if (/iphone|ipad|ipod/.test(userAgent)) {
-                platformInfo.textContent = 'iOS device detected';
-                return 'ios';
-            } else if (/android/.test(userAgent)) {
-                platformInfo.textContent = 'Android device detected';
-                return 'android';
-            } else {
-                platformInfo.textContent = 'Desktop or other platform detected';
-                return 'desktop';
-            }
-        }
-        
-        // Update debug information
-        function updateDebugInfo() {
-            const platform = detectPlatform();
-            const debugDetails = document.getElementById('debug-details');
-            debugDetails.innerHTML = `
-                <strong>Platform:</strong> ${platform}<br>
-                <strong>Current URL:</strong> ${fullUrl}<br>
-                <strong>Custom Scheme:</strong> ${customSchemeUrl}<br>
-                <strong>Redirect Attempts:</strong> ${redirectAttempts}<br>
-                <strong>User Agent:</strong> ${navigator.userAgent.substring(0, 100)}...<br>
-                <strong>Timestamp:</strong> ${new Date().toISOString()}
-            `;
-        }
-        
-        // Safe redirect function
-        function safeRedirect(url, method) {
-            if (hasRedirected || redirectAttempts >= maxRedirects) {
-                updateStatus('Redirect limit reached. Use manual buttons below.');
-                return;
-            }
-            
-            redirectAttempts++;
-            hasRedirected = true;
-            updateStatus(`Attempting ${method} redirect (${redirectAttempts}/${maxRedirects})...`);
-            
-            console.log(`Attempting ${method}:`, url);
-            
-            // Use a small delay to prevent immediate redirect
-            setTimeout(function() {
-                window.location.href = url;
-            }, 100);
-        }
-        
-        // Try to open the app with multiple methods
-        function openApp() {
-            const platform = detectPlatform();
-            updateDebugInfo();
-            
-            // Set up fallback links
-            document.getElementById('custom-scheme-link').href = customSchemeUrl;
-            document.getElementById('web-url-link').href = fullUrl;
-            
-            updateStatus('Starting app redirect sequence...');
-            
-            if (platform === 'ios' || platform === 'android') {
-                // Method 1: Try custom scheme first (most reliable for development)
-                safeRedirect(customSchemeUrl, 'custom scheme');
-                
-                // Method 2: Fallback to web URL after a longer delay
-                setTimeout(function() {
-                    if (!hasRedirected) {
-                        safeRedirect(fullUrl, 'web URL');
-                    }
-                }, 2000);
-                
-            } else {
-                // Desktop - just show the web URL
-                updateStatus('Desktop detected - showing web URL');
-                console.log('Desktop detected, showing web URL');
-                window.location.href = fullUrl;
-            }
-        }
-        
-        // Start the process after a short delay
-        setTimeout(function() {
-            openApp();
-        }, 500);
-    </script>
+<header class="top"><div class="wrap">
+  <a class="brand" href="/"><span class="brand-mark">A</span>The Anzy</a>
+  <nav class="nav">
+    <a href="/logistrip">Logistrip</a>
+    <a href="/swift-rental">Swift Rental</a>
+    <a href="/app">Anzy app</a>
+    <a class="hide-sm" href="/#contact">Contact</a>
+  </nav>
+</div></header>
+<main>
+<section class="center"><div class="card">
+  <h2>Page not found</h2>
+  <p>We couldn't find that page. It may have moved.</p>
+  <div class="actions" style="justify-content:center"><a class="btn btn-violet" href="/">Go to theanzy.com</a></div>
+</div></section>
+</main>
+<footer><div class="wrap">
+  <span>© <span id="y">2026</span> The Anzy</span>
+  <span><a href="/logistrip">Logistrip</a><a href="/swift-rental">Swift Rental</a><a href="/app">Anzy app</a><a href="mailto:support@theanzy.com">Contact</a></span>
+</div></footer>
+<script>document.getElementById('y').textContent = new Date().getFullYear();</script>
 </body>
-</html> 
+</html>

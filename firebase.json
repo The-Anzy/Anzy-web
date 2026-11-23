@@ -1,0 +1,28 @@
+{
+  "hosting": {
+    "public": ".",
+    "ignore": ["firebase.json", ".firebaserc", ".git/**", ".firebase/**", "README.md", "**/.DS_Store"],
+    "cleanUrls": true,
+    "trailingSlash": false,
+    "rewrites": [
+      { "source": "/home", "destination": "/open.html" },
+      { "source": "/profile", "destination": "/open.html" },
+      { "source": "/post/**", "destination": "/open.html" },
+      { "source": "/login", "destination": "/open.html" },
+      { "source": "/register", "destination": "/open.html" },
+      { "source": "/verify", "destination": "/open.html" },
+      { "source": "/forgot-password", "destination": "/open.html" },
+      { "source": "/camera", "destination": "/open.html" },
+      { "source": "/media/**", "destination": "/open.html" }
+    ],
+    "headers": [
+      { "source": "/.well-known/apple-app-site-association", "headers": [{ "key": "Content-Type", "value": "application/json" }] },
+      { "source": "/assets/**", "headers": [{ "key": "Cache-Control", "value": "public, max-age=86400" }] },
+      { "source": "**", "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "Strict-Transport-Security", "value": "max-age=31536000" }
+      ] }
+    ]
+  }
+}

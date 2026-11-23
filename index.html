@@ -1,104 +1,93 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anzy Universal Links</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            line-height: 1.6;
-        }
-        .container {
-            text-align: center;
-            padding-top: 50px;
-        }
-        h1 {
-            color: #333;
-        }
-        .test-links {
-            margin: 30px 0;
-        }
-        .test-link {
-            display: inline-block;
-            margin: 10px;
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-        .test-link:hover {
-            background-color: #0056b3;
-        }
-        .info {
-            background-color: #f8f9fa;
-            padding: 20px;
-            border-radius: 5px;
-            margin: 20px 0;
-            text-align: left;
-        }
-        .dev-banner {
-            background-color: #fff3cd;
-            border: 1px solid #ffeaa7;
-            color: #856404;
-            padding: 15px;
-            border-radius: 5px;
-            margin: 20px 0;
-            text-align: center;
-        }
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Anzy — software that runs real businesses</title>
+<meta name="description" content="The Anzy builds simple, reliable apps for real businesses: Logistrip for transport companies, Swift Rental for vehicle rental fleets, and the Anzy app.">
+<link rel="canonical" href="https://theanzy.com/">
+<meta property="og:title" content="The Anzy">
+<meta property="og:description" content="Simple, reliable apps for real businesses: Logistrip, Swift Rental and Anzy.">
+<meta property="og:url" content="https://theanzy.com/">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#2c1a9e">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Anzy Universal Links</h1>
-        <p>This page is used to test universal links for the Anzy app.</p>
-        
-        <div class="dev-banner">
-            <strong>🚧 Development Mode</strong><br>
-            App is not yet published to App Store or Play Store.<br>
-            Universal links work with development builds (TestFlight/APK).
-        </div>
-        
-        <div class="info">
-            <h3>How Universal Links Work:</h3>
-            <ul>
-                <li>When you click a link below, it should open the Anzy app if installed</li>
-                <li>Works with development builds via TestFlight (iOS) or APK (Android)</li>
-                <li>These links work from any app, email, or browser</li>
-                <li>Test with actual devices, not simulators</li>
-            </ul>
-        </div>
+<header class="top"><div class="wrap">
+  <a class="brand" href="/"><span class="brand-mark">A</span>The Anzy</a>
+  <nav class="nav">
+    <a href="/logistrip">Logistrip</a>
+    <a href="/swift-rental">Swift Rental</a>
+    <a href="/app">Anzy app</a>
+    <a class="hide-sm" href="#contact">Contact</a>
+  </nav>
+</div></header>
 
-        <div class="test-links">
-            <h3>Test Links:</h3>
-            <a href="https://theanzy.com/post/123" class="test-link">Test Post 123</a>
-            <a href="https://theanzy.com/profile" class="test-link">Test Profile</a>
-            <a href="https://theanzy.com/home" class="test-link">Test Home</a>
-            <a href="https://theanzy.com/login" class="test-link">Test Login</a>
-            <a href="https://theanzy.com/register" class="test-link">Test Register</a>
-        </div>
-
-        <div class="info">
-            <h3>Configuration Files:</h3>
-            <ul>
-                <li><strong>Apple:</strong> <a href="/.well-known/apple-app-site-association">/.well-known/apple-app-site-association</a></li>
-                <li><strong>Android:</strong> <a href="/.well-known/assetlinks.json">/.well-known/assetlinks.json</a></li>
-            </ul>
-        </div>
-        
-        <div class="info">
-            <h3>Development Setup:</h3>
-            <ul>
-                <li><strong>iOS:</strong> Install via TestFlight or development build</li>
-                <li><strong>Android:</strong> Install via APK or development build</li>
-                <li><strong>Testing:</strong> Use real devices, not simulators</li>
-                <li><strong>Team ID:</strong> Update in apple-app-site-association file</li>
-            </ul>
-        </div>
+<main>
+  <section class="hero"><div class="wrap">
+    <span class="eyebrow">The Anzy</span>
+    <h1>Software that runs<br>real businesses.</h1>
+    <p class="lead">We build simple, dependable apps for the people who keep things moving: transport companies, vehicle rental fleets, and the communities around them.</p>
+    <div class="actions">
+      <a class="btn btn-lime" href="#products">See our products</a>
+      <a class="btn btn-glass" href="#contact">Talk to us</a>
     </div>
+  </div></section>
+
+  <section class="block" id="products"><div class="wrap">
+    <div class="section-head">
+      <h2>Our products</h2>
+      <p>Each one solves a real job end to end, on the phone and on the web, so teams spend less time on paperwork and more on the work itself.</p>
+    </div>
+    <div class="grid">
+      <a class="card product" href="/logistrip">
+        <div class="icon" style="background:#e8f0ff">🚚</div>
+        <span class="tag live">Live</span>
+        <h3>Logistrip</h3>
+        <p>Transport and delivery management. Drivers capture delivery orders on their phone; the office gets clean records, Excel exports and VAT-ready invoices.</p>
+        <span class="more">Learn more →</span>
+      </a>
+      <a class="card product" href="/swift-rental">
+        <div class="icon" style="background:#efeaff">🔑</div>
+        <span class="tag">Coming soon</span>
+        <h3>Swift Rental</h3>
+        <p>Run a car or bike rental fleet from one app: bookings, ID scanning, handover video and photos, signatures, invoices and payments.</p>
+        <span class="more">Learn more →</span>
+      </a>
+      <a class="card product" href="/app">
+        <div class="icon" style="background:#f3fbd9">✨</div>
+        <span class="tag">Coming soon</span>
+        <h3>Anzy</h3>
+        <p>A social app to share your goals and progress, follow people who inspire you, and chat with your community.</p>
+        <span class="more">Learn more →</span>
+      </a>
+    </div>
+  </div></section>
+
+  <section class="block band"><div class="wrap">
+    <div class="section-head"><h2>How we build</h2></div>
+    <div class="grid">
+      <div class="card feature"><span class="em">📱</span><h3>Phone first</h3><p>Built for the people in the field, with a web portal for the office.</p></div>
+      <div class="card feature"><span class="em">🔒</span><h3>Private by design</h3><p>Each business sees only its own data, and every account is its own.</p></div>
+      <div class="card feature"><span class="em">⚡</span><h3>Fast to start</h3><p>No long setup. We create your account and you start working.</p></div>
+    </div>
+  </div></section>
+
+  <section class="block cta" id="contact"><div class="wrap">
+    <h2>Let’s talk</h2>
+    <p>Want to try one of our products, or have something you’d like us to build? Write to us and a founder will reply.</p>
+    <div class="actions"><a class="btn btn-violet" href="mailto:support@theanzy.com">support@theanzy.com</a></div>
+  </div></section>
+</main>
+
+<footer><div class="wrap">
+  <span>© <span id="y">2026</span> The Anzy</span>
+  <span><a href="/logistrip">Logistrip</a><a href="/swift-rental">Swift Rental</a><a href="/app">Anzy app</a><a href="mailto:support@theanzy.com">Contact</a></span>
+</div></footer>
+<script>document.getElementById('y').textContent = new Date().getFullYear();</script>
 </body>
-</html> 
+</html>
