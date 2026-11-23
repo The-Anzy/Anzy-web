@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Open in the Anzy app</title>
+<meta name="description" content="Open this link in the Anzy app.">
+<meta property="og:title" content="Open in the Anzy app">
+<meta property="og:description" content="Open this link in the Anzy app.">
+<meta name="theme-color" content="#2c1a9e">
+<meta name="robots" content="noindex">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="/"><span class="brand-mark">A</span>The Anzy</a>
+  <nav class="nav">
+    <a href="/logistrip">Logistrip</a>
+    <a href="/swift-rental">Swift Rental</a>
+    <a href="/app">Anzy app</a>
+    <a class="hide-sm" href="/#contact">Contact</a>
+  </nav>
+</div></header>
+<main>
+<section class="center"><div class="card">
+  <h2>Open in the Anzy app</h2>
+  <p>This link opens in the Anzy app. If the app is installed, tap the button below.</p>
+  <div class="actions" style="justify-content:center">
+    <a class="btn btn-violet" id="open" href="anzy://">Open the Anzy app</a>
+    <a class="btn btn-line" href="/app">About Anzy</a>
+  </div>
+</div></section>
+<script>
+  // Hand the same path to the app's own link scheme. One tap, no automatic redirects or reload loops.
+  document.getElementById('open').href = 'anzy:/' + location.pathname + location.search;
+</script>
+</main>
+<footer><div class="wrap">
+  <span>© <span id="y">2026</span> The Anzy</span>
+  <span><a href="/logistrip">Logistrip</a><a href="/swift-rental">Swift Rental</a><a href="/app">Anzy app</a><a href="mailto:support@theanzy.com">Contact</a></span>
+</div></footer>
+<script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+</body>
+</html>
